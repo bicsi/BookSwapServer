@@ -14,3 +14,14 @@ class BookSerializer(serializers.ModelSerializer):
             'created_at',
         ]
         model = models.Book
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = [
+            'author',
+            'book',
+            'comment',
+            'rating'
+        ]
+        model = models.Review

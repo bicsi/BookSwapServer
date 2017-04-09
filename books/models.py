@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
+from django.core.validators import (
+    MaxValueValidator, MinValueValidator)
 from django.db import models
 
 
@@ -36,5 +38,21 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
-
 admin.site.register(Book)
+
+
+class Review(models.Model):
+    author = models.BigIntegerField()
+    book = models.ForeignKey(Book)
+    comment = models.TextField(default='')
+    rating = models.IntegerField(validators=[
+        MaxValueValidator(5),
+        MinValueValidator(1),
+    ])
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "{} ({}*)".format(self.book.title, self.rating)
+
+
+admin.site.register(Review)

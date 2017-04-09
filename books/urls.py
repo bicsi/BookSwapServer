@@ -18,6 +18,8 @@ from django.conf.urls import url
 from books import views
 
 urlpatterns = [
-    url(r'^$', views.BookList.as_view(), name='book_list'),
-    url(r'create/$', views.CreateBook.as_view(), name='create')
+    url(r'^$', views.BookListCreate.as_view(), name='book_list'),
+    url(r'^(?P<pk>\d+)/$', views.BookRUD.as_view(), name='book_detail'),
+    url(r'^(?P<book_pk>\d+)/reviews/$', views.ReviewListCreate.as_view(), name='review_list'),
+    url(r'^(?P<book_pk>\d+)/reviews/(?P<pk>\d+)/$', views.ReviewRUD.as_view(), name='review_detail'),
 ]

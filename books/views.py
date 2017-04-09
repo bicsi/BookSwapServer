@@ -1,24 +1,27 @@
 # Create your views here
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework import generics
 
 from . import serializers, models
 
 
-class BookList(APIView):
-    def get(self, request, format=None):
-        courses = models.Book.objects.all()
-        serializer = serializers.BookSerializer(
-            courses, many=True)
-        return Response(serializer.data)
+class BookListCreate(generics.ListCreateAPIView):
+    queryset = models.Book.objects.all()
+    serializer_class = serializers.BookSerializer
 
 
-class CreateBook(APIView):
-    def post(self, request, format=None):
-        serializer = serializers.BookSerializer(
-            data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data,
-                        status=status.HTTP_201_CREATED)
+class BookRUD(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Book.objects.all()
+    serializer_class = serializers.BookSerializer
+
+
+class ReviewListCreate(generics.ListCreateAPIView):
+    queryset = models.Review.objects.all()
+    serializer_class = serializers.ReviewSerializer
+
+    def get_queryset(self):
+        return self.queryset.filter(book=self.kwargs.get('book_pk'))
+
+
+class ReviewRUD(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Review.objects.all()
+    serializer_class = serializers.ReviewSerializer

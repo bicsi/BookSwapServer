@@ -3,7 +3,7 @@
 from django.test import TestCase
 from rest_framework.renderers import JSONRenderer
 
-from models import Book, BookGenre, BookAuthor
+from models import Book, BookGenre, BookAuthor, Review
 from serializers import BookSerializer
 
 
@@ -28,4 +28,11 @@ class AddBookTest(TestCase):
         book = Book.objects.get(title="Test book #0")
         serializer = BookSerializer(book)
         jsonString = JSONRenderer().render(serializer.data)
-        print str(jsonString)
+
+    def testAddReview(self):
+        book = Book.objects.get(title="Test book #1")
+        Review.objects.create(
+            author=1,
+            book=book,
+            rating=5
+        )
