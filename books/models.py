@@ -30,7 +30,7 @@ class Book(models.Model):
     author = models.ForeignKey(BookAuthor, default=None)
     genre = models.ForeignKey(BookGenre, default=None)
     short_description = models.TextField()
-    goodreads_id = models.IntegerField(default=None)
+    goodreads_id = models.BigIntegerField(blank=True, null=True, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
