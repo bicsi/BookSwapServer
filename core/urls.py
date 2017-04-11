@@ -18,5 +18,6 @@ from django.conf.urls import url
 from core import views
 
 urlpatterns = [
-    url(r'books/(?P<pk>\d+)/current-user/', views.GetCurrentAccountOfBook.as_view(), name='current-user')
+    url(r'books/(?P<pk>\d+)/current-user/', views.RetrieveCurrentUserOfBook.as_view(), name='current-user'),
+    url(r'books/(?P<pk>\d+)/transactions/', views.ListCreateTransactionsOfBook.as_view(), name='list-transactions'),
 ]
