@@ -13,14 +13,10 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
-from django.contrib import admin
+from django.conf.urls import url
+
+from core import views
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^api/v1/books/', include('books.urls', namespace='books')),
-    url(r'^api/v1/accounts/', include('accounts.urls', namespace='accounts')),
-    url(r'^api/v1/', include('core.urls', namespace='core')),
-    url(r'^oauth/', include('social_django.urls', namespace='social')),
+    url(r'books/(?P<pk>\d+)/current-user/', views.GetCurrentAccountOfBook.as_view(), name='current-user')
 ]
