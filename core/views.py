@@ -15,7 +15,7 @@ class RetrieveCurrentUserOfBook(generics.RetrieveAPIView):
             .order_by('-created_at') \
             .values('to_account') \
             .first() \
-            .get('to_account')
+            .get('to_account__')
         return get_object_or_404(Account, pk=seek_id)
 
     serializer_class = AccountSerializer
